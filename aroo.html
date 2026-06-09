@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AROO — Chinese Gadgets Bangladesh</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --red:#D85A30;--red-light:#FAECE7;--red-dark:#993C1D;
+  --bg:#ffffff;--bg-sec:#f7f7f5;--bg-ter:#f2f1ee;
+  --text:#1a1a1a;--text-sec:#6b6b6b;--text-hint:#9b9b9b;
+  --border:#e5e5e3;--border-sec:#d0d0cd;
+  --radius:8px;--radius-lg:12px;--radius-xl:16px;
+  --font:'Inter',system-ui,sans-serif;
+}
+body{font-family:var(--font);color:var(--text);background:var(--bg-ter);font-size:16px;line-height:1.6}
+.hidden{display:none!important}
+
+/* NAV */
+nav{background:var(--bg);border-bottom:1px solid var(--border);padding:0 1.5rem;display:flex;align-items:center;justify-content:space-between;height:58px;position:sticky;top:0;z-index:100}
+.logo-wrap{display:flex;align-items:center;gap:10px}
+.logo{font-size:24px;font-weight:700;color:var(--red);letter-spacing:2px}
+.logo-tagline{font-size:11px;color:var(--text-sec);letter-spacing:0.3px;border-left:1px solid var(--border);padding-left:10px}
+.nav-right{display:flex;gap:6px;align-items:center}
+.nav-btn{background:none;border:1px solid var(--border);border-radius:var(--radius);padding:7px 14px;font-size:13px;cursor:pointer;color:var(--text);font-family:var(--font);display:flex;align-items:center;gap:6px;transition:background 0.15s}
+.nav-btn:hover{background:var(--bg-sec)}
+.nav-btn.primary{background:var(--red);color:#fff;border-color:var(--red)}
+.nav-btn.primary:hover{background:var(--red-dark)}
+.cart-btn{position:relative}
+.cart-badge{position:absolute;top:-7px;right:-7px;background:var(--red);color:#fff;font-size:10px;width:18px;height:18px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:600}
+
+/* HERO */
+.hero{background:var(--bg);padding:3.5rem 1.5rem 2.5rem;text-align:center;border-bottom:1px solid var(--border)}
+.hero-eyebrow{display:inline-block;background:var(--red-light);color:var(--red-dark);font-size:12px;font-weight:600;padding:4px 14px;border-radius:20px;margin-bottom:1rem;letter-spacing:0.5px}
+.hero h1{font-size:36px;font-weight:700;margin-bottom:10px;line-height:1.2}
+.hero h1 span{color:var(--red)}
+.hero p{color:var(--text-sec);font-size:15px;max-width:440px;margin:0 auto 1.5rem}
+.hero-badges{display:flex;gap:8px;justify-content:center;flex-wrap:wrap}
+.badge{background:var(--bg-sec);border:1px solid var(--border);border-radius:20px;padding:6px 14px;font-size:12px;color:var(--text-sec);display:flex;align-items:center;gap:5px}
+
+/* SEARCH */
+.search-bar{background:var(--bg);padding:12px 1.5rem;border-bottom:1px solid var(--border);display:flex;gap:8px}
+.search-bar input{flex:1;border:1px solid var(--border);border-radius:var(--radius);padding:9px 14px;font-size:14px;background:var(--bg-sec);color:var(--text);font-family:var(--font);outline:none}
+.search-bar input:focus{border-color:var(--red)}
+.search-bar select{border:1px solid var(--border);border-radius:var(--radius);padding:9px 12px;font-size:13px;background:var(--bg-sec);color:var(--text);font-family:var(--font);cursor:pointer;outline:none}
+
+/* PAGE WRAPPER */
+.page{padding:1.5rem;max-width:1100px;margin:0 auto}
+.section-title{font-size:18px;font-weight:600;margin-bottom:1rem;display:flex;align-items:center;gap:8px}
+
+/* PRODUCTS GRID */
+.products-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:1rem}
+.product-card{background:var(--bg);border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden;cursor:pointer;transition:border-color 0.15s,transform 0.15s}
+.product-card:hover{border-color:var(--red);transform:translateY(-2px)}
+.product-img{width:100%;height:145px;display:flex;align-items:center;justify-content:center;background:var(--bg-sec);font-size:52px}
+.product-info{padding:12px}
+.product-name{font-size:14px;font-weight:600;margin-bottom:4px;line-height:1.4}
+.product-price{font-size:16px;font-weight:700;color:var(--red);margin-bottom:5px}
+.product-meta{font-size:12px;color:var(--text-sec);margin-bottom:8px}
+.colors-row{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:10px}
+.color-dot{width:16px;height:16px;border-radius:50%;border:2px solid var(--border)}
+.add-btn{width:100%;background:var(--red);color:#fff;border:none;border-radius:var(--radius);padding:9px;font-size:13px;cursor:pointer;font-weight:600;font-family:var(--font);transition:background 0.15s}
+.add-btn:hover{background:var(--red-dark)}
+.add-btn:disabled{background:var(--border);color:var(--text-hint);cursor:not-allowed}
+.stock-badge{display:inline-block;font-size:11px;padding:2px 8px;border-radius:12px;font-weight:500}
+.in-stock{background:#EAF3DE;color:#3B6D11}
+.out-stock{background:#FCEBEB;color:#A32D2D}
+
+/* MODAL */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.45);z-index:200;display:flex;align-items:center;justify-content:center;padding:1rem}
+.modal{background:var(--bg);border-radius:var(--radius-xl);border:1px solid var(--border);padding:1.5rem;width:100%;max-width:460px;max-height:92vh;overflow-y:auto;position:relative}
+.modal-close{position:absolute;top:14px;right:14px;background:var(--bg-sec);border:none;border-radius:50%;width:30px;height:30px;cursor:pointer;font-size:16px;color:var(--text-sec);display:flex;align-items:center;justify-content:center}
+.modal-img{width:100%;height:180px;background:var(--bg-sec);border-radius:var(--radius-lg);display:flex;align-items:center;justify-content:center;font-size:68px;margin-bottom:1rem}
+.modal h2{font-size:18px;font-weight:700;margin-bottom:4px}
+.modal-price{font-size:22px;font-weight:700;color:var(--red);margin-bottom:6px}
+.modal-desc{font-size:14px;color:var(--text-sec);margin-bottom:1rem;line-height:1.6}
+.field-label{font-size:13px;font-weight:600;margin-bottom:7px;display:block;color:var(--text)}
+.option-row{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:1rem}
+.opt-btn{padding:6px 14px;border:1px solid var(--border);border-radius:var(--radius);font-size:13px;cursor:pointer;background:var(--bg-sec);color:var(--text);font-family:var(--font);transition:all 0.12s}
+.opt-btn.selected{border-color:var(--red);color:var(--red);background:var(--red-light);font-weight:600}
+.qty-row{display:flex;align-items:center;gap:10px;margin-bottom:1.5rem}
+.qty-btn{width:34px;height:34px;border:1px solid var(--border);border-radius:var(--radius);background:var(--bg-sec);cursor:pointer;font-size:18px;color:var(--text);font-family:var(--font);transition:background 0.12s}
+.qty-btn:hover{background:var(--border)}
+.qty-display{font-size:16px;font-weight:600;min-width:28px;text-align:center}
+.modal-actions{display:flex;gap:8px}
+.btn-outline{flex:1;background:none;border:1px solid var(--border-sec);border-radius:var(--radius);padding:11px;font-size:14px;cursor:pointer;color:var(--text);font-family:var(--font);font-weight:500;transition:background 0.12s}
+.btn-outline:hover{background:var(--bg-sec)}
+.btn-fill{flex:2;background:var(--red);color:#fff;border:none;border-radius:var(--radius);padding:11px;font-size:14px;cursor:pointer;font-weight:600;font-family:var(--font);transition:background 0.12s;display:flex;align-items:center;justify-content:center;gap:7px}
+.btn-fill:hover{background:var(--red-dark)}
+
+/* CART */
+.cart-item{background:var(--bg);border:1px solid var(--border);border-radius:var(--radius-lg);padding:1rem;display:flex;gap:12px;align-items:center;margin-bottom:10px}
+.cart-item-img{width:58px;height:58px;background:var(--bg-sec);border-radius:var(--radius);display:flex;align-items:center;justify-content:center;font-size:28px;flex-shrink:0}
+.cart-item-info{flex:1}
+.cart-item-name{font-size:14px;font-weight:600}
+.cart-item-meta{font-size:12px;color:var(--text-sec)}
+.cart-item-price{font-size:15px;font-weight:700;color:var(--red);white-space:nowrap}
+.remove-btn{background:none;border:none;cursor:pointer;color:var(--text-hint);font-size:18px;padding:4px;border-radius:var(--radius);transition:color 0.12s}
+.remove-btn:hover{color:#E24B4A}
+.order-summary{background:var(--bg);border:1px solid var(--border);border-radius:var(--radius-lg);padding:1.25rem;margin-top:1rem}
+.summary-row{display:flex;justify-content:space-between;font-size:14px;padding:6px 0;border-bottom:1px solid var(--border)}
+.summary-row:last-child{border-bottom:none;font-weight:700;font-size:15px}
+
+/* FORMS */
+.form-group{margin-bottom:1rem}
+.form-group label{font-size:13px;font-weight:600;display:block;margin-bottom:6px}
+.form-group input,.form-group textarea,.form-group select{width:100%;border:1px solid var(--border);border-radius:var(--radius);padding:10px 13px;font-size:14px;background:var(--bg);color:var(--text);font-family:var(--font);outline:none;transition:border-color 0.12s}
+.form-group input:focus,.form-group textarea:focus,.form-group select:focus{border-color:var(--red)}
+.form-group textarea{min-height:80px;resize:vertical}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.success-box{background:#EAF3DE;border:1px solid #639922;border-radius:var(--radius-lg);padding:1.5rem;text-align:center;margin-top:1rem}
+.success-box h3{color:#3B6D11;font-size:18px;font-weight:600;margin-bottom:8px}
+.success-box p{color:#3B6D11;font-size:14px}
+
+/* OWNER */
+.owner-panel{display:grid;grid-template-columns:220px 1fr;gap:1.5rem;min-height:500px}
+.owner-sidebar{background:var(--bg);border:1px solid var(--border);border-radius:var(--radius-lg);padding:1rem;height:fit-content}
+.owner-sidebar h3{font-size:11px;font-weight:700;color:var(--text-hint);margin-bottom:10px;text-transform:uppercase;letter-spacing:1px}
+.sidebar-item{display:flex;align-items:center;gap:9px;padding:9px 10px;border-radius:var(--radius);font-size:14px;cursor:pointer;color:var(--text);margin-bottom:2px;transition:background 0.12s}
+.sidebar-item:hover,.sidebar-item.active{background:var(--bg-sec)}
+.sidebar-item.active{color:var(--red);font-weight:600}
+.owner-content{background:var(--bg);border:1px solid var(--border);border-radius:var(--radius-lg);padding:1.5rem}
+.owner-tab{display:none}
+.owner-tab.active{display:block}
+.stats-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:1.5rem}
+.stat-card{background:var(--bg-sec);border-radius:var(--radius);padding:1rem;border:1px solid var(--border)}
+.stat-label{font-size:12px;color:var(--text-sec);margin-bottom:4px;font-weight:500}
+.stat-val{font-size:24px;font-weight:700}
+.orders-table{width:100%;border-collapse:collapse;font-size:13px}
+.orders-table th{text-align:left;padding:9px 10px;border-bottom:1px solid var(--border);color:var(--text-sec);font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:0.4px}
+.orders-table td{padding:10px 10px;border-bottom:1px solid var(--border)}
+.orders-table tr:last-child td{border-bottom:none}
+.status-pill{display:inline-block;padding:3px 10px;border-radius:12px;font-size:11px;font-weight:600}
+.pending{background:#FAEEDA;color:#854F0B}
+.confirmed{background:#EAF3DE;color:#3B6D11}
+.delivered{background:#E6F1FB;color:#185FA5}
+.add-product-form{display:grid;gap:12px}
+.variants-editor{display:flex;flex-direction:column;gap:8px}
+.variant-row{display:flex;gap:8px;align-items:center}
+.variant-row input{flex:1;border:1px solid var(--border);border-radius:var(--radius);padding:8px 11px;font-size:13px;background:var(--bg-sec);color:var(--text);font-family:var(--font);outline:none}
+.variant-row input:focus{border-color:var(--red)}
+.add-variant-btn{background:none;border:1px dashed var(--border-sec);border-radius:var(--radius);padding:8px 12px;font-size:13px;cursor:pointer;color:var(--text-sec);text-align:center;font-family:var(--font);width:100%;transition:background 0.12s}
+.add-variant-btn:hover{background:var(--bg-sec)}
+.remove-variant{background:none;border:none;cursor:pointer;color:var(--text-hint);font-size:16px;padding:4px}
+.remove-variant:hover{color:#E24B4A}
+.product-list-item{display:flex;align-items:center;gap:12px;padding:11px 0;border-bottom:1px solid var(--border)}
+.product-list-item:last-child{border-bottom:none}
+.product-list-emoji{width:46px;height:46px;background:var(--bg-sec);border-radius:var(--radius);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;border:1px solid var(--border)}
+.product-list-info{flex:1}
+.product-list-name{font-size:14px;font-weight:600}
+.product-list-meta{font-size:12px;color:var(--text-sec);margin-top:2px}
+.product-list-price{font-size:14px;font-weight:700;color:var(--red);white-space:nowrap}
+.action-btns{display:flex;gap:6px}
+.action-btn{background:none;border:1px solid var(--border);border-radius:var(--radius);padding:5px 10px;font-size:12px;cursor:pointer;color:var(--text);font-family:var(--font);transition:background 0.12s}
+.action-btn:hover{background:var(--bg-sec)}
+.empty-state{text-align:center;padding:3rem 1rem;color:var(--text-hint)}
+.empty-state i{font-size:42px;margin-bottom:12px;display:block}
+.alert{padding:10px 14px;border-radius:var(--radius);font-size:13px;margin-bottom:12px}
+.alert-success{background:#EAF3DE;color:#3B6D11;border:1px solid #97C459}
+
+/* ABOUT */
+.about-section{background:var(--bg);border-top:1px solid var(--border);padding:3.5rem 1.5rem}
+.about-inner{max-width:800px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:3rem}
+.about-text h2{font-size:22px;font-weight:700;margin-bottom:1rem}
+.about-text p{font-size:14px;color:var(--text-sec);line-height:1.8;margin-bottom:10px}
+.feature-list{list-style:none}
+.feature-list li{font-size:14px;padding:8px 0;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:9px;color:var(--text-sec)}
+.feature-list li:last-child{border-bottom:none}
+.feature-list li i{color:var(--red);font-size:16px}
+
+/* FOOTER */
+footer{background:var(--bg);border-top:1px solid var(--border);padding:1.5rem;text-align:center;font-size:13px;color:var(--text-sec)}
+footer a{color:var(--red);text-decoration:none}
+footer a:hover{text-decoration:underline}
+
+/* LOGIN */
+.login-card{background:var(--bg);border:1px solid var(--border);border-radius:var(--radius-lg);padding:1.5rem;max-width:360px;margin:3rem auto}
+.login-error{background:#FCEBEB;color:#A32D2D;border:1px solid #F09595;border-radius:var(--radius);padding:10px 14px;font-size:13px;margin-bottom:12px}
+
+/* RESPONSIVE */
+@media(max-width:700px){
+  .products-grid{grid-template-columns:1fr 1fr}
+  .owner-panel{grid-template-columns:1fr}
+  .form-row{grid-template-columns:1fr}
+  .stats-grid{grid-template-columns:1fr 1fr}
+  .about-inner{grid-template-columns:1fr;gap:2rem}
+  .hero h1{font-size:26px}
+  .logo-tagline{display:none}
+}
+@media(max-width:420px){
+  .products-grid{grid-template-columns:1fr}
+  nav{padding:0 1rem}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="logo-wrap">
+    <div class="logo">AROO</div>
+    <div class="logo-tagline">Chinese Gadgets — Bangladesh</div>
+  </div>
+  <div class="nav-right">
+    <button class="nav-btn" onclick="showPage('shop')"><i class="ti ti-home"></i> Shop</button>
+    <button class="nav-btn cart-btn" onclick="showPage('cart')" id="cart-nav-btn" aria-label="Cart">
+      <i class="ti ti-shopping-cart"></i>
+      <span class="cart-badge hidden" id="cart-count-badge">0</span>
+    </button>
+    <button class="nav-btn primary" onclick="showPage('owner')"><i class="ti ti-lock"></i> Owner</button>
+  </div>
+</nav>
+
+<!-- SHOP PAGE -->
+<div id="page-shop">
+  <div class="hero">
+    <div class="hero-eyebrow">🇧🇩 Delivering all over Bangladesh</div>
+    <h1>Top Chinese Gadgets,<br><span>Right at Your Door</span></h1>
+    <p>Quality Chinese tech products sourced directly, delivered anywhere in Bangladesh within 3 working days.</p>
+    <div class="hero-badges">
+      <span class="badge"><i class="ti ti-truck"></i> 3-day delivery</span>
+      <span class="badge"><i class="ti ti-shield-check"></i> Quality assured</span>
+      <span class="badge"><i class="ti ti-cash"></i> Cash on delivery</span>
+      <span class="badge"><i class="ti ti-headset"></i> Support via email</span>
+    </div>
+  </div>
+  <div class="search-bar">
+    <input type="text" id="search-input" placeholder="Search products..." oninput="filterProducts()">
+    <select id="category-filter" onchange="filterProducts()">
+      <option value="">All categories</option>
+    </select>
+  </div>
+  <div class="page">
+    <div class="section-title"><i class="ti ti-sparkles"></i> All products</div>
+    <div class="products-grid" id="products-grid"></div>
+    <div id="no-products" class="empty-state hidden">
+      <i class="ti ti-box-off"></i>
+      <p style="font-size:15px">No products found.</p>
+    </div>
+  </div>
+
+  <div class="about-section">
+    <div class="about-inner">
+      <div class="about-text">
+        <h2>About AROO</h2>
+        <p>AROO brings the best Chinese gadgets and tech products straight to your hands across Bangladesh. From smart home devices to phone accessories, we source quality products at affordable prices.</p>
+        <p>Every order is processed with care and dispatched within 3 working days. We're committed to making online shopping easy, safe, and reliable for every Bangladeshi customer.</p>
+        <p style="margin-top:1rem;font-size:13px">Questions? Reach us at <a href="mailto:classicsxecho@gmail.com" style="color:var(--red)">classicsxecho@gmail.com</a></p>
+      </div>
+      <div>
+        <ul class="feature-list">
+          <li><i class="ti ti-check"></i> Nationwide delivery across Bangladesh</li>
+          <li><i class="ti ti-check"></i> 3 working days dispatch guarantee</li>
+          <li><i class="ti ti-check"></i> Multiple color &amp; variant options</li>
+          <li><i class="ti ti-check"></i> Easy hassle-free ordering</li>
+          <li><i class="ti ti-check"></i> Cash on delivery available</li>
+          <li><i class="ti ti-check"></i> bKash / Nagad / Rocket accepted</li>
+          <li><i class="ti ti-mail"></i> classicsxecho@gmail.com</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    &copy; 2025 AROO. All rights reserved. &nbsp;|&nbsp; <a href="mailto:classicsxecho@gmail.com">classicsxecho@gmail.com</a> &nbsp;|&nbsp; Delivering quality Chinese gadgets across Bangladesh
+  </footer>
+</div>
+
+<!-- CART PAGE -->
+<div id="page-cart" style="display:none">
+  <div class="page" style="max-width:680px">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:1.5rem">
+      <button class="nav-btn" onclick="showPage('shop')"><i class="ti ti-arrow-left"></i> Back</button>
+      <div class="section-title" style="margin:0"><i class="ti ti-shopping-cart"></i> Your cart</div>
+    </div>
+    <div id="cart-items-container"></div>
+    <div id="cart-empty" class="empty-state hidden">
+      <i class="ti ti-shopping-cart-off"></i>
+      <p style="font-size:15px;margin-bottom:1rem">Your cart is empty.</p>
+      <button class="btn-fill" style="margin:0 auto;padding:10px 24px;border-radius:var(--radius)" onclick="showPage('shop')">Browse products</button>
+    </div>
+    <div id="cart-summary" class="hidden">
+      <div class="order-summary">
+        <div class="summary-row"><span>Subtotal</span><span id="cart-subtotal">৳0</span></div>
+        <div class="summary-row"><span>Delivery</span><span style="color:#3B6D11;font-weight:600">Free</span></div>
+        <div class="summary-row"><span>Total</span><span id="cart-total" style="color:var(--red)">৳0</span></div>
+      </div>
+      <button class="btn-fill" style="width:100%;margin-top:12px;padding:13px;border-radius:var(--radius);font-size:15px" onclick="showPage('checkout')"><i class="ti ti-truck"></i> Proceed to checkout</button>
+    </div>
+  </div>
+</div>
+
+<!-- CHECKOUT PAGE -->
+<div id="page-checkout" style="display:none">
+  <div class="page" style="max-width:560px">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:1.5rem">
+      <button class="nav-btn" onclick="showPage('cart')"><i class="ti ti-arrow-left"></i> Back</button>
+      <div class="section-title" style="margin:0"><i class="ti ti-clipboard-list"></i> Place your order</div>
+    </div>
+    <div id="checkout-order-review" style="margin-bottom:1.5rem"></div>
+    <div id="checkout-form-card" style="background:var(--bg);border:1px solid var(--border);border-radius:var(--radius-lg);padding:1.25rem">
+      <p style="font-size:15px;font-weight:600;margin-bottom:1rem">Delivery information</p>
+      <div class="form-group"><label>Full name *</label><input type="text" id="o-name" placeholder="Your full name"></div>
+      <div class="form-group"><label>Phone number *</label><input type="text" id="o-phone" placeholder="01XXXXXXXXX"></div>
+      <div class="form-group"><label>Delivery address *</label><textarea id="o-address" placeholder="House no., road, area, upazilla..."></textarea></div>
+      <div class="form-row">
+        <div class="form-group"><label>District *</label>
+          <select id="o-district">
+            <option value="">Select district...</option>
+            <option>Dhaka</option><option>Chittagong</option><option>Sylhet</option><option>Rajshahi</option>
+            <option>Khulna</option><option>Barisal</option><option>Rangpur</option><option>Mymensingh</option>
+            <option>Comilla</option><option>Narayanganj</option><option>Gazipur</option><option>Tangail</option>
+            <option>Bogura</option><option>Noakhali</option><option>Feni</option><option>Cox's Bazar</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="form-group"><label>Payment method</label>
+          <select id="o-payment">
+            <option>Cash on delivery</option>
+            <option>bKash</option>
+            <option>Nagad</option>
+            <option>Rocket</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group"><label>Order note (optional)</label><input type="text" id="o-note" placeholder="Any special instructions..."></div>
+      <div id="checkout-error" class="alert" style="background:#FCEBEB;color:#A32D2D;border:1px solid #F09595;display:none"></div>
+      <button class="btn-fill" style="width:100%;padding:13px;border-radius:var(--radius);font-size:15px" onclick="placeOrder()"><i class="ti ti-check"></i> Confirm order</button>
+    </div>
+    <div id="order-success" class="success-box hidden">
+      <i class="ti ti-circle-check" style="font-size:40px;color:#3B6D11;margin-bottom:10px"></i>
+      <h3>Order placed successfully!</h3>
+      <p>Thank you! We will contact you within 24 hours to confirm. Expected delivery: 3 working days.</p>
+      <button class="btn-fill" style="margin:16px auto 0;padding:10px 28px;border-radius:var(--radius)" onclick="resetAfterOrder()">Continue shopping</button>
+    </div>
+  </div>
+</div>
+
+<!-- OWNER PAGE -->
+<div id="page-owner" style="display:none">
+  <div class="page">
+    <div id="owner-login">
+      <div class="login-card">
+        <p style="font-size:20px;font-weight:700;margin-bottom:4px">Owner login</p>
+        <p style="font-size:13px;color:var(--text-sec);margin-bottom:1.5rem">Access your AROO dashboard</p>
+        <div class="form-group"><label>Password</label><input type="password" id="owner-pass" placeholder="Enter owner password" onkeydown="if(event.key==='Enter')ownerLogin()"></div>
+        <div id="login-error" class="login-error" style="display:none">Incorrect password. Please try again.</div>
+        <button class="btn-fill" style="width:100%;padding:11px;border-radius:var(--radius)" onclick="ownerLogin()"><i class="ti ti-login"></i> Login</button>
+        <p style="font-size:11px;color:var(--text-hint);margin-top:12px;text-align:center">Default password: <strong>aroo2025</strong></p>
+      </div>
+    </div>
+
+    <div id="owner-dashboard" style="display:none">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem">
+        <div class="section-title" style="margin:0"><i class="ti ti-dashboard"></i> Owner dashboard</div>
+        <button class="nav-btn" onclick="ownerLogout()"><i class="ti ti-logout"></i> Logout</button>
+      </div>
+      <div class="owner-panel">
+        <div class="owner-sidebar">
+          <h3>Menu</h3>
+          <div class="sidebar-item active" onclick="ownerTab('overview')" id="sb-overview"><i class="ti ti-layout-dashboard"></i> Overview</div>
+          <div class="sidebar-item" onclick="ownerTab('orders')" id="sb-orders"><i class="ti ti-clipboard-list"></i> Orders</div>
+          <div class="sidebar-item" onclick="ownerTab('products')" id="sb-products"><i class="ti ti-box"></i> Products</div>
+          <div class="sidebar-item" onclick="ownerTab('add-product')" id="sb-add-product"><i class="ti ti-plus"></i> Add product</div>
+        </div>
+        <div class="owner-content">
+          <!-- OVERVIEW TAB -->
+          <div class="owner-tab active" id="tab-overview">
+            <p style="font-size:18px;font-weight:700;margin-bottom:1rem">Overview</p>
+            <div class="stats-grid">
+              <div class="stat-card"><div class="stat-label">Total products</div><div class="stat-val" id="stat-products">0</div></div>
+              <div class="stat-card"><div class="stat-label">Total orders</div><div class="stat-val" id="stat-orders">0</div></div>
+              <div class="stat-card"><div class="stat-label">Pending orders</div><div class="stat-val" id="stat-pending">0</div></div>
+            </div>
+            <p style="font-size:14px;color:var(--text-sec)">Welcome to your AROO dashboard. Manage your product catalog and track customer orders from here.</p>
+          </div>
+
+          <!-- ORDERS TAB -->
+          <div class="owner-tab" id="tab-orders">
+            <p style="font-size:18px;font-weight:700;margin-bottom:1rem">All orders</p>
+            <div id="orders-list"></div>
+          </div>
+
+          <!-- MANAGE PRODUCTS TAB -->
+          <div class="owner-tab" id="tab-products">
+            <p style="font-size:18px;font-weight:700;margin-bottom:1rem">Manage products</p>
+            <div id="manage-products-list"></div>
+          </div>
+
+          <!-- ADD PRODUCT TAB -->
+          <div class="owner-tab" id="tab-add-product">
+            <p style="font-size:18px;font-weight:700;margin-bottom:1rem">Add new product</p>
+            <div id="add-product-alert" class="alert alert-success hidden"></div>
+            <div class="add-product-form">
+              <div class="form-group"><label>Product name *</label><input type="text" id="p-name" placeholder="e.g. Wireless Earbuds Pro"></div>
+              <div class="form-group"><label>Category *</label><input type="text" id="p-category" placeholder="e.g. Audio, Phone Accessories, Smart Home..."></div>
+              <div class="form-row">
+                <div class="form-group"><label>Price (৳) *</label><input type="number" id="p-price" placeholder="e.g. 1200" min="0"></div>
+                <div class="form-group"><label>Stock quantity *</label><input type="number" id="p-qty" placeholder="e.g. 50" min="0"></div>
+              </div>
+              <div class="form-group"><label>Product emoji</label><input type="text" id="p-emoji" placeholder="Paste an emoji e.g. 🎧 🔌 📱" maxlength="4"></div>
+              <div class="form-group"><label>Description *</label><textarea id="p-desc" placeholder="Short product description..."></textarea></div>
+              <div class="form-group">
+                <label>Color variants</label>
+                <div class="variants-editor" id="color-variants">
+                  <div class="variant-row">
+                    <input type="text" placeholder="Color name (e.g. Black)">
+                    <button class="remove-variant" onclick="removeVariant(this)" title="Remove"><i class="ti ti-x"></i></button>
+                  </div>
+                </div>
+                <button class="add-variant-btn" style="margin-top:8px" onclick="addColorVariant()"><i class="ti ti-plus"></i> Add color</button>
+              </div>
+              <div class="form-group">
+                <label>Other variants (e.g. size, storage)</label>
+                <div class="variants-editor" id="other-variants">
+                  <div class="variant-row">
+                    <input type="text" placeholder="Variant (e.g. 64GB, Small, Large)">
+                    <button class="remove-variant" onclick="removeVariant(this)" title="Remove"><i class="ti ti-x"></i></button>
+                  </div>
+                </div>
+                <button class="add-variant-btn" style="margin-top:8px" onclick="addOtherVariant()"><i class="ti ti-plus"></i> Add variant</button>
+              </div>
+              <button class="btn-fill" style="padding:12px;border-radius:var(--radius);font-size:14px" onclick="addProduct()"><i class="ti ti-circle-plus"></i> Add product to store</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PRODUCT MODAL -->
+<div class="modal-overlay hidden" id="product-modal" onclick="closeModal(event)">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModalDirect()" aria-label="Close"><i class="ti ti-x"></i></button>
+    <div class="modal-img" id="m-img"></div>
+    <h2 id="m-name"></h2>
+    <div class="modal-price" id="m-price"></div>
+    <div class="modal-desc" id="m-desc"></div>
+    <div id="m-colors-section" style="margin-bottom:1rem">
+      <span class="field-label">Color</span>
+      <div class="option-row" id="m-colors"></div>
+    </div>
+    <div id="m-variants-section" style="margin-bottom:1rem">
+      <span class="field-label">Variant</span>
+      <div class="option-row" id="m-variants"></div>
+    </div>
+    <span class="field-label">Quantity</span>
+    <div class="qty-row">
+      <button class="qty-btn" onclick="changeQty(-1)">−</button>
+      <span class="qty-display" id="modal-qty">1</span>
+      <button class="qty-btn" onclick="changeQty(1)">+</button>
+      <span style="font-size:13px;color:var(--text-sec)" id="m-stock-label"></span>
+    </div>
+    <div class="modal-actions">
+      <button class="btn-outline" onclick="addToCart()"><i class="ti ti-shopping-cart"></i> Add to cart</button>
+      <button class="btn-fill" onclick="buyNow()"><i class="ti ti-bolt"></i> Buy now</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// --- DATA ---
+let products = [
+  {id:1,name:'Wireless Earbuds Pro',category:'Audio',price:1490,qty:30,emoji:'🎧',desc:'High-quality TWS earbuds with active noise cancellation, 24hr battery life, and deep bass. Compatible with all Android and iPhone devices.',colors:['Black','White','Blue'],variants:['Standard','Pro'],colorDots:['#222','#f0f0f0','#378ADD']},
+  {id:2,name:'Smart LED Strip Light',category:'Smart Home',price:890,qty:50,emoji:'💡',desc:'RGB LED strip with app control, 16 million colors, voice assistant compatible. Includes remote control. Flexible and cuttable.',colors:['Warm White','Cool White','RGB'],variants:['5m','10m'],colorDots:['#FFD700','#E8F4FD','#FF4444']},
+  {id:3,name:'Mini Drone with Camera',category:'Gadgets',price:4200,qty:15,emoji:'🚁',desc:'Pocket-sized foldable drone with 720p HD camera, 15-minute flight time, altitude hold, and headless mode. Perfect for beginners.',colors:['Black','White'],variants:['Without Camera','With Camera'],colorDots:['#222','#f0f0f0']},
+  {id:4,name:'Magnetic Phone Holder',category:'Accessories',price:380,qty:100,emoji:'📱',desc:'Strong magnetic car mount with 360° rotation. Works with MagSafe and all standard phones. Silicone grip, no scratching.',colors:['Black','Silver','Rose Gold'],variants:['Dashboard Mount','Air Vent Mount'],colorDots:['#222','#C0C0C0','#B76E79']},
+];
+let orders = [];
+let cart = [];
+let currentProduct = null;
+let modalQty = 1;
+let selectedColor = '';
+let selectedVariant = '';
+let nextId = 5;
+
+// --- PAGES ---
+function showPage(p) {
+  ['shop','cart','checkout','owner'].forEach(x => {
+    document.getElementById('page-'+x).style.display = 'none';
+  });
+  document.getElementById('page-'+p).style.display = 'block';
+  if(p==='cart') renderCart();
+  if(p==='checkout') renderCheckoutReview();
+  if(p==='shop') renderProducts();
+  window.scrollTo(0,0);
+}
+
+// --- PRODUCTS ---
+function renderProducts() {
+  const q = document.getElementById('search-input').value.toLowerCase();
+  const cat = document.getElementById('category-filter').value;
+  const cats = [...new Set(products.map(p=>p.category))];
+  const sel = document.getElementById('category-filter');
+  const cur = sel.value;
+  sel.innerHTML = '<option value="">All categories</option>' + cats.map(c=>`<option${cur===c?' selected':''}>${c}</option>`).join('');
+  sel.value = cur;
+  const filtered = products.filter(p => {
+    const matchQ = !q || p.name.toLowerCase().includes(q) || p.category.toLowerCase().includes(q) || p.desc.toLowerCase().includes(q);
+    const matchC = !cat || p.category === cat;
+    return matchQ && matchC;
+  });
+  const grid = document.getElementById('products-grid');
+  document.getElementById('no-products').classList.toggle('hidden', filtered.length > 0);
+  grid.innerHTML = filtered.map(p => `
+    <div class="product-card" onclick="openModal(${p.id})">
+      <div class="product-img">${p.emoji||'📦'}</div>
+      <div class="product-info">
+        <div class="product-name">${p.name}</div>
+        <div class="product-price">৳${p.price.toLocaleString()}</div>
+        <div class="product-meta">${p.category} &nbsp;·&nbsp; <span class="stock-badge ${p.qty>0?'in-stock':'out-stock'}">${p.qty>0?'In stock':'Out of stock'}</span></div>
+        <div class="colors-row">${(p.colorDots||[]).slice(0,5).map(c=>`<div class="color-dot" style="background:${c}"></div>`).join('')}</div>
+        <button class="add-btn" ${p.qty<1?'disabled':''} onclick="event.stopPropagation();${p.qty>0?`openModal(${p.id})`:''}">${p.qty>0?'Select options':'Out of stock'}</button>
+      </div>
+    </div>`).join('');
+}
+
+function filterProducts() { renderProducts(); }
+
+// --- MODAL ---
+function openModal(id) {
+  currentProduct = products.find(p=>p.id===id);
+  if(!currentProduct) return;
+  modalQty = 1;
+  selectedColor = currentProduct.colors?.[0] || '';
+  selectedVariant = currentProduct.variants?.[0] || '';
+  document.getElementById('m-img').textContent = currentProduct.emoji || '📦';
+  document.getElementById('m-name').textContent = currentProduct.name;
+  document.getElementById('m-price').textContent = '৳' + currentProduct.price.toLocaleString();
+  document.getElementById('m-desc').textContent = currentProduct.desc;
+  document.getElementById('modal-qty').textContent = 1;
+  document.getElementById('m-stock-label').textContent = currentProduct.qty > 0 ? `${currentProduct.qty} in stock` : 'Out of stock';
+  const colorsEl = document.getElementById('m-colors');
+  const colorsSec = document.getElementById('m-colors-section');
+  if(currentProduct.colors?.length) {
+    colorsSec.style.display = 'block';
+    colorsEl.innerHTML = currentProduct.colors.map((c,i)=>`<div class="opt-btn${i===0?' selected':''}" onclick="selectColor(this,'${c}')">${c}</div>`).join('');
+  } else { colorsSec.style.display = 'none'; }
+  const varEl = document.getElementById('m-variants');
+  const varSec = document.getElementById('m-variants-section');
+  if(currentProduct.variants?.length) {
+    varSec.style.display = 'block';
+    varEl.innerHTML = currentProduct.variants.map((v,i)=>`<div class="opt-btn${i===0?' selected':''}" onclick="selectVariant(this,'${v}')">${v}</div>`).join('');
+  } else { varSec.style.display = 'none'; }
+  document.getElementById('product-modal').classList.remove('hidden');
+  document.body.style.overflow = 'hidden';
+}
+
+function selectColor(el, c) {
+  selectedColor = c;
+  el.parentNode.querySelectorAll('.opt-btn').forEach(x=>x.classList.remove('selected'));
+  el.classList.add('selected');
+}
+function selectVariant(el, v) {
+  selectedVariant = v;
+  el.parentNode.querySelectorAll('.opt-btn').forEach(x=>x.classList.remove('selected'));
+  el.classList.add('selected');
+}
+function changeQty(d) {
+  modalQty = Math.max(1, Math.min(modalQty + d, currentProduct?.qty || 99));
+  document.getElementById('modal-qty').textContent = modalQty;
+}
+function closeModal(e) { if(e.target.id==='product-modal') closeModalDirect(); }
+function closeModalDirect() {
+  document.getElementById('product-modal').classList.add('hidden');
+  document.body.style.overflow = '';
+}
+
+// --- CART ---
+function addToCart() {
+  if(!currentProduct || currentProduct.qty < 1) return;
+  const existing = cart.find(i => i.id===currentProduct.id && i.color===selectedColor && i.variant===selectedVariant);
+  if(existing) { existing.qty = Math.min(existing.qty + modalQty, currentProduct.qty); }
+  else { cart.push({id:currentProduct.id, name:currentProduct.name, price:currentProduct.price, emoji:currentProduct.emoji, color:selectedColor, variant:selectedVariant, qty:modalQty}); }
+  updateCartBadge();
+  closeModalDirect();
+}
+function buyNow() { addToCart(); showPage('checkout'); }
+
+function updateCartBadge() {
+  const total = cart.reduce((s,i)=>s+i.qty, 0);
+  const badge = document.getElementById('cart-count-badge');
+  badge.textContent = total;
+  badge.classList.toggle('hidden', total === 0);
+}
+
+function renderCart() {
+  const cont = document.getElementById('cart-items-container');
+  const emptyEl = document.getElementById('cart-empty');
+  const summaryEl = document.getElementById('cart-summary');
+  if(cart.length === 0) {
+    cont.innerHTML = '';
+    emptyEl.classList.remove('hidden');
+    summaryEl.classList.add('hidden');
+    return;
+  }
+  emptyEl.classList.add('hidden');
+  summaryEl.classList.remove('hidden');
+  cont.innerHTML = cart.map((item, idx) => `
+    <div class="cart-item">
+      <div class="cart-item-img">${item.emoji||'📦'}</div>
+      <div class="cart-item-info">
+        <div class="cart-item-name">${item.name}</div>
+        <div class="cart-item-meta">${[item.color, item.variant].filter(Boolean).join(' · ')} &nbsp;·&nbsp; Qty: ${item.qty}</div>
+      </div>
+      <div class="cart-item-price">৳${(item.price * item.qty).toLocaleString()}</div>
+      <button class="remove-btn" onclick="removeFromCart(${idx})" title="Remove"><i class="ti ti-trash"></i></button>
+    </div>`).join('');
+  const sub = cart.reduce((s,i)=>s + i.price * i.qty, 0);
+  document.getElementById('cart-subtotal').textContent = '৳' + sub.toLocaleString();
+  document.getElementById('cart-total').textContent = '৳' + sub.toLocaleString();
+}
+
+function removeFromCart(idx) { cart.splice(idx, 1); updateCartBadge(); renderCart(); }
+
+// --- CHECKOUT ---
+function renderCheckoutReview() {
+  const sub = cart.reduce((s,i)=>s + i.price * i.qty, 0);
+  document.getElementById('checkout-order-review').innerHTML = `
+    <div style="background:var(--bg);border:1px solid var(--border);border-radius:var(--radius-lg);padding:1.25rem">
+      <p style="font-size:15px;font-weight:600;margin-bottom:10px">Order summary</p>
+      ${cart.map(i=>`<div style="display:flex;justify-content:space-between;font-size:13px;padding:6px 0;border-bottom:1px solid var(--border)"><span>${i.emoji} ${i.name}${[i.color,i.variant].filter(Boolean).length?' ('+[i.color,i.variant].filter(Boolean).join('/')+')':''} ×${i.qty}</span><span style="font-weight:600">৳${(i.price*i.qty).toLocaleString()}</span></div>`).join('')}
+      <div style="display:flex;justify-content:space-between;font-size:15px;font-weight:700;padding-top:10px"><span>Total</span><span style="color:var(--red)">৳${sub.toLocaleString()}</span></div>
+    </div>`;
+  document.getElementById('order-success').classList.add('hidden');
+  document.getElementById('checkout-form-card').style.display = 'block';
+  document.getElementById('checkout-order-review').style.display = 'block';
+}
+
+function placeOrder() {
+  const name = document.getElementById('o-name').value.trim();
+  const phone = document.getElementById('o-phone').value.trim();
+  const address = document.getElementById('o-address').value.trim();
+  const district = document.getElementById('o-district').value;
+  const errEl = document.getElementById('checkout-error');
+  if(!name || !phone || !address || !district) {
+    errEl.textContent = 'Please fill in all required fields.';
+    errEl.style.display = 'block';
+    return;
+  }
+  errEl.style.display = 'none';
+  const order = {
+    id: 'ORD-' + String(orders.length+1).padStart(4,'0'),
+    name, phone,
+    address: address + ', ' + district,
+    payment: document.getElementById('o-payment').value,
+    note: document.getElementById('o-note').value,
+    items: [...cart],
+    total: cart.reduce((s,i)=>s+i.price*i.qty, 0),
+    status: 'pending',
+    date: new Date().toLocaleDateString('en-GB')
+  };
+  orders.push(order);
+  cart = [];
+  updateCartBadge();
+  document.getElementById('order-success').classList.remove('hidden');
+  document.getElementById('checkout-form-card').style.display = 'none';
+  document.getElementById('checkout-order-review').style.display = 'none';
+  ['o-name','o-phone','o-address','o-note'].forEach(id => document.getElementById(id).value='');
+  document.getElementById('o-district').selectedIndex=0;
+}
+
+function resetAfterOrder() { showPage('shop'); }
+
+// --- OWNER ---
+function ownerLogin() {
+  const pass = document.getElementById('owner-pass').value;
+  if(pass === 'aroo2025') {
+    document.getElementById('owner-login').style.display = 'none';
+    document.getElementById('owner-dashboard').style.display = 'block';
+    updateOwnerStats();
+    renderOrdersTable();
+    renderManageProducts();
+  } else {
+    document.getElementById('login-error').style.display = 'block';
+  }
+}
+function ownerLogout() {
+  document.getElementById('owner-login').style.display = 'block';
+  document.getElementById('owner-dashboard').style.display = 'none';
+  document.getElementById('owner-pass').value = '';
+}
+function ownerTab(t) {
+  document.querySelectorAll('.owner-tab').forEach(x=>x.classList.remove('active'));
+  document.querySelectorAll('.sidebar-item').forEach(x=>x.classList.remove('active'));
+  document.getElementById('tab-'+t).classList.add('active');
+  document.getElementById('sb-'+t).classList.add('active');
+  if(t==='orders') renderOrdersTable();
+  if(t==='products') renderManageProducts();
+  if(t==='overview') updateOwnerStats();
+}
+function updateOwnerStats() {
+  document.getElementById('stat-products').textContent = products.length;
+  document.getElementById('stat-orders').textContent = orders.length;
+  document.getElementById('stat-pending').textContent = orders.filter(o=>o.status==='pending').length;
+}
+function renderOrdersTable() {
+  const el = document.getElementById('orders-list');
+  if(orders.length === 0) { el.innerHTML = '<div class="empty-state"><i class="ti ti-clipboard-x"></i><p>No orders yet.</p></div>'; return; }
+  el.innerHTML = `<div style="overflow-x:auto"><table class="orders-table"><thead><tr><th>Order ID</th><th>Customer</th><th>Items</th><th>Total</th><th>Date</th><th>Status</th><th>Update</th></tr></thead><tbody>` +
+    orders.map((o,i) => `<tr>
+      <td style="font-size:12px;font-weight:600">${o.id}</td>
+      <td><div style="font-size:13px;font-weight:600">${o.name}</div><div style="font-size:11px;color:var(--text-sec)">${o.phone}</div><div style="font-size:11px;color:var(--text-sec)">${o.address}</div></td>
+      <td style="font-size:12px">${o.items.map(it=>`${it.emoji} ${it.name} ×${it.qty}`).join('<br>')}</td>
+      <td style="font-weight:700;color:var(--red)">৳${o.total.toLocaleString()}</td>
+      <td style="font-size:12px">${o.date}</td>
+      <td><span class="status-pill ${o.status}">${o.status.charAt(0).toUpperCase()+o.status.slice(1)}</span></td>
+      <td><select style="font-size:12px;padding:5px 7px;border:1px solid var(--border);border-radius:var(--radius);background:var(--bg-sec);color:var(--text);font-family:inherit" onchange="updateOrderStatus(${i},this.value)">
+        <option${o.status==='pending'?' selected':''} value="pending">Pending</option>
+        <option${o.status==='confirmed'?' selected':''} value="confirmed">Confirmed</option>
+        <option${o.status==='delivered'?' selected':''} value="delivered">Delivered</option>
+      </select></td>
+    </tr>`).join('') + '</tbody></table></div>';
+}
+function updateOrderStatus(i, s) { orders[i].status = s; renderOrdersTable(); updateOwnerStats(); }
+
+function renderManageProducts() {
+  const el = document.getElementById('manage-products-list');
+  if(products.length === 0) { el.innerHTML = '<div class="empty-state"><i class="ti ti-box-off"></i><p>No products added yet.</p></div>'; return; }
+  el.innerHTML = products.map((p,i) => `
+    <div class="product-list-item">
+      <div class="product-list-emoji">${p.emoji||'📦'}</div>
+      <div class="product-list-info">
+        <div class="product-list-name">${p.name}</div>
+        <div class="product-list-meta">${p.category} &nbsp;·&nbsp; Stock: ${p.qty} &nbsp;·&nbsp; Colors: ${p.colors?.join(', ')||'—'}</div>
+      </div>
+      <div class="product-list-price">৳${p.price.toLocaleString()}</div>
+      <div class="action-btns">
+        <button class="action-btn" onclick="toggleStock(${i})">${p.qty>0?'Mark out':'Restock'}</button>
+        <button class="action-btn" style="color:#A32D2D" onclick="deleteProduct(${i})" title="Delete product"><i class="ti ti-trash"></i></button>
+      </div>
+    </div>`).join('');
+}
+function toggleStock(i) { products[i].qty = products[i].qty > 0 ? 0 : 10; renderManageProducts(); renderProducts(); }
+function deleteProduct(i) {
+  if(confirm('Delete "' + products[i].name + '"? This cannot be undone.')) {
+    products.splice(i, 1);
+    renderManageProducts();
+    renderProducts();
+    updateOwnerStats();
+  }
+}
+
+// --- ADD PRODUCT ---
+function addColorVariant() {
+  const c = document.getElementById('color-variants');
+  const d = document.createElement('div');
+  d.className = 'variant-row';
+  d.innerHTML = `<input type="text" placeholder="Color name (e.g. Red)"><button class="remove-variant" onclick="removeVariant(this)" title="Remove"><i class="ti ti-x"></i></button>`;
+  c.appendChild(d);
+}
+function addOtherVariant() {
+  const c = document.getElementById('other-variants');
+  const d = document.createElement('div');
+  d.className = 'variant-row';
+  d.innerHTML = `<input type="text" placeholder="Variant (e.g. 128GB, XL)"><button class="remove-variant" onclick="removeVariant(this)" title="Remove"><i class="ti ti-x"></i></button>`;
+  c.appendChild(d);
+}
+function removeVariant(btn) {
+  const row = btn.parentNode;
+  if(row.parentNode.children.length > 1) row.remove();
+}
+function addProduct() {
+  const name = document.getElementById('p-name').value.trim();
+  const cat = document.getElementById('p-category').value.trim();
+  const price = parseFloat(document.getElementById('p-price').value);
+  const qty = parseInt(document.getElementById('p-qty').value);
+  const emoji = document.getElementById('p-emoji').value.trim() || '📦';
+  const desc = document.getElementById('p-desc').value.trim();
+  if(!name || !cat || !price || isNaN(price) || !qty || isNaN(qty) || !desc) {
+    alert('Please fill in all required fields.');
+    return;
+  }
+  const colors = [...document.getElementById('color-variants').querySelectorAll('input')].map(i=>i.value.trim()).filter(Boolean);
+  const variants = [...document.getElementById('other-variants').querySelectorAll('input')].map(i=>i.value.trim()).filter(Boolean);
+  products.push({id:nextId++, name, category:cat, price, qty, emoji, desc, colors, variants, colorDots: colors.map(()=>'#888')});
+  const alEl = document.getElementById('add-product-alert');
+  alEl.textContent = `"${name}" added to your store successfully!`;
+  alEl.classList.remove('hidden');
+  setTimeout(()=>alEl.classList.add('hidden'), 3500);
+  ['p-name','p-category','p-price','p-qty','p-emoji','p-desc'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('color-variants').innerHTML = '<div class="variant-row"><input type="text" placeholder="Color name (e.g. Black)"><button class="remove-variant" onclick="removeVariant(this)" title="Remove"><i class="ti ti-x"></i></button></div>';
+  document.getElementById('other-variants').innerHTML = '<div class="variant-row"><input type="text" placeholder="Variant (e.g. 64GB)"><button class="remove-variant" onclick="removeVariant(this)" title="Remove"><i class="ti ti-x"></i></button></div>';
+  updateOwnerStats();
+}
+
+// Init
+renderProducts();
+</script>
+</body>
+</html>
